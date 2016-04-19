@@ -1,7 +1,9 @@
-set yrange [36:45]
-set ylabel "PAGELOAD IS SSL percentage, 30-day moving average"
-set multiplot
+set yrange [0:60]
+set ylabel "Percentage of pageloads over HTTPS"
 set xdata time
 set timefmt "%Y%m%d"
-plot "pageload_is_ssl.csv" using 1:2 with points pointsize 0
-plot "pageload_is_ssl.csv" using 1:3 with lines lt rgb "black"
+set terminal pngcairo size 1000,700 enhanced font "Helvetica,14"
+set output 'pageload_is_ssl.png'
+plot \
+  "pageload_is_ssl.csv" using 1:3 title "30-day centered moving average" with lines lt rgb "black", \
+  "pageload_is_ssl.csv" using 1:2 title "daily" with points pt 7 pointsize 0.3 lc rgb "#BBBBBB"
