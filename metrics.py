@@ -86,7 +86,7 @@ def plot(metric):
         ),
         x=[], y=[])
     average_graph = plotly.graph_objs.Scatter(
-        name='28-day centered moving average',
+        name='14-day centered moving average',
         line=dict(
             color="rgb(0, 0, 0)",
         ),
@@ -96,9 +96,10 @@ def plot(metric):
         date = datetime.datetime.strptime(results[i][0], "%Y%m%d")
         percents_graph.x.append(date)
         percents_graph.y.append(results[i][1])
-        if i <= 14 || i > len(results) - 14:
+        if i <= 7 or i > len(results) - 7:
             continue
-        average = sum([x[1] for x in results[i-14:i+13]]) / 28
+        window = results[i-7:i+7]
+        average = sum([x[1] for x in window]) / len(window)
         average_graph.x.append(date)
         average_graph.y.append(average)
 
